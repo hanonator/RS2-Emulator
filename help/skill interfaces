@@ -1,0 +1,101 @@
+[QUOTE=Wiffles;3341526]In this tutorial I'm going to be showing you how to properly remove Layers in an interface, what this can be used for is correcting the amount of buttons in your Skill Advancement interfaces, and other interfaces I haven't found.
+
+[LIST]
+[*][B]Okay now before you post, I recommend you do not do the following:[/B]
+[LIST]
+[*]Post saying this has been done before. (We don't give a shit honestly.)
+[*]Say something negative, if you're going to say useless shit; don't say anything at all.
+[/LIST]
+[/LIST]
+
+[b]Tools you will be using:[/b]
+
+[url=http://www.rune-server.org/runescape-development/rs2-client/tools/342736-lins-interface-emulator-editor-mirror.html]Lin's Interface Emulator[/url]
+ [b][COLOR="Red"]OR:[/COLOR][/b]
+[url=http://www.rune-server.org/runescape-development/rs2-client/tools/323497-rspsi-beta.html]RSPSi[/url]
+
+[b]Packets you will be using:[/b]
+[LIST]
+[*]171:
+[LIST]
+[*][code]if(pktType == 171)
+{
+	boolean hidden = inStream.readUnsignedByte() == 1;
+	int interfaceIndex = inStream.readUnsignedWord();
+	RSInterface.interfaceCache[interfaceIndex].hidden = hidden;
+	pktType = -1;
+	return true;
+}[/code]
+[*]readUnsignedByte():
+[LIST]
+[*]return buffer[offset++] & 0xff;
+[/LIST]
+[*]readUnsignedWord():
+[LIST]
+[*]offset += 2
+[*]return ((buffer[offset - 2] & 0xff) << 8) + (buffer[offset - 1] & 0xff);
+[/LIST]
+[/LIST]
+[/LIST]
+
+[b]Functions/methods you will be using:[/b]
+[list]
+
+[spoiler=Hyperion]
+[code]public ActionSender sendHideInterfaceLayer(int interfaceIndex, boolean hidden) {
+	player.write(new PacketBuilder(171).put((byte) (hidden ? 1 : 0)).putShort(interfaceIndex).toPacket());
+	return this;
+}[/code]
+
+[b]Usage:[/b] player.getActionSender().sendHideInterfaceLayer(8860, true); // Hides the layer 8860.
+[/spoiler]
+
+[spoiler=Deltascape]
+[code]public void sendHideInterfaceLayer(int interfaceIndex, boolean hidden) {
+	outStream.createFrame(171);
+	outStream.writeByte(hidden ? 1 : 0);
+	outStream.writeWord(interfaceIndex);
+}[/code]
+
+[b]Usage:[/b] sendHideInterfaceLayer(8860, true); // Hides the layer 8860
+[/spoiler]
+
+[spoiler=RuneSource]
+[code]public ActionSender sendHideInterfaceLayer(int interfaceIndex, boolean hidden) {
+	StreamBuffer.OutBuffer out = StreamBuffer.newOutBuffer(6);
+	out.writeHeader(player.getEncryptor(), 171);
+	out.writeByte(hidden ? 1 : 0);
+	out.writeShort(interfaceIndex);
+	player.send(out.getBuffer());
+	return this;
+}[/code]
+
+[b]Usage:[/b] player.getActionSender().sendHideInterfaceLayer(8860, true); // Hides the layer 8860.
+[/spoiler]
+[/list]
+
+[b]Finding the layers:[/b]
+
+[spoiler=RSPSi]
+What we'll be doing is opening interface 8714, then looking inside of the layers within for what we don't want to show.
+
+Starting off, this is what we have:
+[img]http://troll.ws/i/MQtqoZ.png[/img]
+
+Now say that you want Op 10 to be hidden, you will look for the layer that contains it:
+[img]http://screensnapr.com/e/kHtvx0.png[/img]
+
+Which in this case, the layers index is 8863. So you want to sendHideInterfaceLayer(8860, true); to hide that layer.
+[b]By the way:[/b] Each layer also has it's own background and borders, so when you remove it-it changes the size of the visual background.
+
+So if we remove these 3 interfaces:
+[img]http://screensnapr.com/e/tbmP9e.png[/img]
+
+We get:
+
+[img]http://troll.ws/i/QoQMZS.png[/img]
+
+[/spoiler]
+
+[b]I will make the tutorial for Lin's Emulator later.[/b][/QUOTE]
+

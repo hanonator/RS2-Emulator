@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<encoders>
+	<encoder>
+		<source>org.hannes.util.PlayerDetails</source>
+		<index>249</index>
+		<attributes>
+			<attribute type="short">id</attribute>
+			<attribute type="byte" value="1" >type</attribute>
+		</attributes>
+	</encoder>
+	<encoder>
+		<source>org.hannes.rs2.util.LoginVerification</source>
+		<index>107</index>
+		<attributes />
+	</encoder>
+	<encoder>
+		<source>org.hannes.locale.Region</source>
+		<index>219</index>
+		<attributes>
+			<attribute type="short">x</attribute>
+			<attribute type="short">y</attribute>
+		</attributes>
+	</encoder>
+	<encoder>
+		<source>org.hannes.rs2.util.SidebarInterface</source>
+		<index>63</index>
+		<attributes>
+			<attribute type="short">interfaceId</attribute>
+			<attribute type="byte">index</attribute>
+		</attributes>
+	</encoder>
+	<encoder>
+		<source>org.hannes.rs2.util.TextMessage</source>
+		<index>196</index>
+		<attributes>
+			<attribute type="string">text</attribute>
+		</attributes>
+	</encoder>
+	<encoder>
+		<source>org.hannes.rs2.util.Label</source>
+		<index>59</index>
+		<attributes>
+			<attribute type="short">index</attribute>
+			<attribute type="string">text</attribute>
+		</attributes>
+	</encoder>
+	<encoder>
+		<source>org.hannes.rs2.Skill</source>
+		<index>154</index>
+		<attributes>
+			<attribute type="byte">index</attribute>
+			<attribute type="int">experience</attribute>
+			<attribute type="byte">level</attribute>
+		</attributes>
+	</encoder>
+	<encoder>
+		<source>org.hannes.rs2.util.Status</source>
+		<index>13</index>
+		<attributes>
+			<attribute type="byte">publicChat</attribute>
+			<attribute type="byte">privateChat</attribute>
+			<attribute type="byte">trade</attribute>
+		</attributes>
+	</encoder>
+	<encoder>
+		<source>org.hannes.rs2.util.Small</source>
+		<index>75</index>
+		<attributes>
+			<attribute type="short">index</attribute>
+			<attribute type="byte">value</attribute>
+		</attributes>
+	</encoder>
+	<encoder>
+		<source>org.hannes.rs2.util.Large</source>
+		<index>97</index>
+		<attributes>
+			<attribute type="short">index</attribute>
+			<attribute type="int">value</attribute>
+		</attributes>
+	</encoder>
+	<encoder>
+		<source>org.hannes.rs2.util.DoubleInterface</source>
+		<index>55</index>
+		<attributes>
+			<attribute type="short">primaryInterface</attribute>
+			<attribute type="short">secondaryInterface</attribute>
+		</attributes>
+	</encoder>
+	<encoder>
+		<source>org.hannes.rs2.util.LogoutRequest</source>
+		<index>121</index>
+		<attributes />
+	</encoder>
+	<encoder>
+		<source>org.hannes.rs2.container.ContainerContext</source>
+		<target>org.hannes.net.codec.impl.ContainerEncoder</target>
+		<index>76</index>
+	</encoder>
+	<encode>
+		<source>org.hannes.rs2.util.ItemModel</source>
+		<index>18</index>
+		<attributes>
+			<attribute type="short">interfaceId</attribute>
+			<attribute type="short">itemId</attribute>
+			<attribute type="short">zoom</attribute>
+		</attributes>
+	</encode>
+	<encode>
+		<source>org.hannes.rs2.util.ItemModel</source>
+		<index>155</index>
+		<attributes>
+			<attribute type="short">itemId</attribute>
+			<attribute type="short">zoom</attribute>
+		</attributes>
+	</encode>
+</encoders>

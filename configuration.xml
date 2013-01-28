@@ -1,0 +1,19 @@
+<configuration>
+	<!-- General server information -->
+	<port>43594</port>
+	<host>localhost</host>
+	<server-name>RS2 Emulator</server-name>
+	
+	<!-- Server revision ID -->
+	<version>289</version>
+	
+	<!-- The database information -->
+	<db-username>red</db-username>
+	<db-password>tentaquil</db-password>
+	<db-url>jdbc:mysql://localhost/</db-url>
+	<character-db>rsps</character-db>
+	<configuration-db>rsps_config</configuration-db>
+	
+	<!-- Debug mode -->
+	<debug-mode>true</debug-mode>
+</configuration>

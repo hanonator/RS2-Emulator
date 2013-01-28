@@ -1,0 +1,303 @@
+package org.hannes.rs2.container.impl;
+
+import org.hannes.entity.Player;
+import org.hannes.entity.sync.UpdateFlags.UpdateFlag;
+import org.hannes.event.EquipEvent;
+import org.hannes.observer.Observable;
+import org.hannes.observer.Observer;
+import org.hannes.rs2.container.Container;
+import org.hannes.rs2.container.ContainerContext;
+import org.hannes.rs2.container.ContainerEvent;
+import org.hannes.rs2.container.Item;
+import org.hannes.rs2.container.StackingPolicy;
+import org.hannes.rs2.util.EquipmentUtils;
+import org.hannes.rs2.util.ItemDefinition;
+
+/**
+ * 
+ * 
+ * @author red
+ *
+ */
+public class Equipment extends Container implements Observer<ContainerEvent> {
+
+	/**
+	 * Size of the container
+	 */
+	public static final int SIZE = 14;
+	
+	/**
+	 * Interface n stuff
+	 */
+	public static final int INTERFACE = 1688;
+	
+	/**
+	 * The helmet slot.
+	 */
+	public static final int SLOT_HELM = 0;
+	
+	/**
+	 * The cape slot.
+	 */
+	public static final int SLOT_CAPE = 1;
+	
+	/**
+	 * The amulet slot.
+	 */
+	public static final int SLOT_AMULET = 2;
+	
+	/**
+	 * The weapon slot.
+	 */
+	public static final int SLOT_WEAPON = 3;
+	
+	/**
+	 * The chest slot.
+	 */
+	public static final int SLOT_CHEST = 4;
+	
+	/**
+	 * The shield slot.
+	 */
+	public static final int SLOT_SHIELD = 5;
+	
+	/**
+	 * The bottoms slot.
+	 */
+	public static final int SLOT_BOTTOMS = 7;
+	
+	/**
+	 * The gloves slot.
+	 */
+	public static final int SLOT_GLOVES = 9;
+	
+	/**
+	 * The boots slot.
+	 */
+	public static final int SLOT_BOOTS = 10;
+	
+	/**
+	 * The rings slot.
+	 */
+	public static final int SLOT_RING = 12;
+	
+	/**
+	 * The arrows slot.
+	 */
+	public static final int SLOT_ARROWS = 13;
+	
+	/**
+	 * The player
+	 */
+	private final Player player;
+
+	/**
+	 * 
+	 */
+	public Equipment(Player player) {
+		super(SIZE, StackingPolicy.WHEN_NECESSARY);
+		
+		this.player = player;
+		this.register(this);
+	}
+
+	public boolean unequip(int slot) {
+		try {
+			if (slot >= 0 && slot < SIZE && super.get(slot) != null) {
+				super.setFireUpdate(false);
+				/*
+				 * Get the item
+				 */
+				Item item = super.get(slot);
+				
+				/*
+				 * See if the item stacks or not  
+				 */
+				boolean stacks = item.getDefinition().isStackable();
+				
+				/*
+				 * Only add if the player has enough inventory space.
+				 */
+				if (player.getInventory().available() >= 1 || (stacks && player.getInventory().contains(item.getId()))) {
+					/*
+					 * Add the item to the player's inventory
+					 */
+					player.getInventory().add(new Item(item));
+					
+					/*
+					 * Delete the item from the equipment
+					 */
+					super.remove(slot, item);
+					
+					/*
+					 * item has been succesfully equiped
+					 */
+					return true;
+				} else {
+					player.getConnection().write("You have not enough inventory space to do that.");
+					return false;
+				}
+			}
+			return false;
+		} finally {
+			/*
+			 * Refresh the container
+			 */
+			super.setFireUpdate(true);
+			super.refresh();
+		}
+	}
+
+	/**
+	 * Equip an item
+	 * 
+	 * @param event
+	 * @throws Exception
+	 */
+	public void equip(EquipEvent event) throws Exception {
+		try {
+			final int slot = event.getSlot();
+			final Item item = player.getInventory().get(slot);
+			
+			if (slot >= 0 && slot < player.getInventory().size() && player.getInventory().get(slot) != null) {
+				/*
+				 * Do not update until everything is complete
+				 */
+				super.setFireUpdate(false);
+
+				/*
+				 * Get the target slot
+				 */
+				int target = EquipmentUtils.getType(item).getSlot();
+				
+				/*
+				 * Get the item definition of the held item
+				 */
+				ItemDefinition heldItem = getId(SLOT_WEAPON) > 0 ? ItemDefinition.forId(getId(SLOT_WEAPON)) : ItemDefinition.forId(0);
+				
+				/*
+				 * TODO: implement 2H 
+				 */
+				boolean twoHanded = (target == SLOT_WEAPON || target == SLOT_SHIELD) && false;
+				
+				/*
+				 * If the player has no room for both the items, don't continue
+				 */
+				if (twoHanded && super.get(SLOT_WEAPON) != null && super.get(SLOT_SHIELD) != null && player.getInventory().available() <= 0) {
+					player.getConnection().write("You have not enough inventory space to do that.");
+					return;
+				}
+
+				/*
+				 * Replace the item from the inventory with the item in the
+				 * equipment.
+				 */
+				replace(player.getInventory(), this, slot, target);
+
+				/*
+				 * If the target slot is the shield slot, this means the player
+				 * is already wielding a two handed weapon and we just move it
+				 * to the inventory
+				 */
+				if (twoHanded && target == SLOT_SHIELD && getId(SLOT_WEAPON) >= 0) {
+					replace(player.getInventory(), this, slot, SLOT_WEAPON);
+				}
+
+				/*
+				 * If the target slot is weapon, we move the shield to the first
+				 * available free slot.
+				 */
+				if (twoHanded && target == SLOT_WEAPON && getId(SLOT_SHIELD) >= 0) {
+					replace(player.getInventory(), this, player.getInventory().freeSlot(), SLOT_SHIELD);
+				}
+			}
+		} finally {
+			/*
+			 * Refresh the container
+			 */
+			super.setFireUpdate(true);
+			super.refresh();
+		}
+	}
+
+	@Override
+	public void update(Observable<ContainerEvent> observable, ContainerEvent object) throws Exception {
+		/*
+		 * The player has to get his appearance update to show the updated character model
+		 */
+		player.getUpdateFlags().flag(UpdateFlag.APPEARANCE);
+		
+		/*
+		 * Send the items to the interface
+		 */
+		player.getConnection().write(new ContainerContext(this, INTERFACE));
+	}
+
+	@Override
+	public void exceptionCaught(Observable<ContainerEvent> observable, Throwable exception) {
+		exception.printStackTrace();
+	}
+
+	/**
+	 * Replaces an item in the player's equipment
+	 * 
+	 * @param source
+	 * @param destination
+	 * @param sourceIndex
+	 * @param destinationIndex
+	 */
+	private void replace(Container source, Container destination, int sourceIndex, int destinationIndex) {
+		Item sourceItem = source.get(sourceIndex);
+		Item destinationItem = destination.get(destinationIndex);
+
+		/*
+		 * If the items are of the same id and stack, merge them into the source
+		 * item
+		 */
+		if (sourceItem != null && destinationItem != null && sourceItem.getDefinition().isStackable() && sourceItem.getId() == destinationItem.getId()) {
+			sourceItem.setAmount(sourceItem.getAmount() + destinationItem.getAmount());
+			destinationItem.setId(-1);
+		}
+
+		if (sourceItem != null) {
+			/*
+			 * Set the source item on the destination index
+			 */
+			destination.set(destinationIndex, new Item(sourceItem));
+
+			/*
+			 * Remove the source item from the source container
+			 */
+			source.set(sourceIndex, null);
+		}
+
+		/*
+		 * If the destination item is not null, transfer it to the destination
+		 * container
+		 */
+		if (destinationItem != null) {
+			/*
+			 * Set the source item on the destination index
+			 */
+			source.set(sourceIndex, new Item(destinationItem));
+
+			/*
+			 * Remove the source item from the source container
+			 */
+			if (destination.get(destinationIndex) == destinationItem) {
+				destination.set(destinationIndex, null);
+			}
+		}
+	}
+
+	/**
+	 * Gets the id of the equipment, -1 if nothing is equipped
+	 * 
+	 * @param index
+	 * @return
+	 */
+	public int getId(int index) {
+		return get(index) == null ? -1 : get(index).getId();
+	}
+
+}

@@ -1,0 +1,1 @@
+SNAKESIN(6289, new int[] { 15, 12, 8, 5, 6 }, Animation.create(1249), new int[] { 6322, 6324, 6330, 6326, 6328 }, new int[] { 53, 51, 47, 48, 45 }, new double[] { 55, 50, 35, 45, 30 }),

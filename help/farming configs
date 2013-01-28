@@ -1,0 +1,15 @@
+Allotments
+Fally + Catherby
+config 504
+
+Fally
+NW is just value
+SE is (value << 8) << 16
+NW + SE is ((se << 8) + nw) << 16
+
+Catherby
+S is value << 8
+N is (1 << 8) + value
+N + S is (value << 8) + value
+
+Will post more and such as I figure them out. Other two allotments should use that same patterns just config is 505 instead of 504. Will test tomorrow.

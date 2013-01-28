@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<decoders>
+	<decoder>
+		<index>181</index>
+		<size>0</size>
+		<target>org.hannes.event.NullEvent</target>
+		<attributes />
+	</decoder>
+	<decoder>
+		<index>232</index>
+		<size>0</size>
+		<target>org.hannes.event.NullEvent</target>
+		<attributes />
+	</decoder>
+	<decoder>
+		<index>224</index>
+		<size>4</size>
+		<target>org.hannes.event.NullEvent</target>
+		<attributes />
+	</decoder>
+	<decoder>
+		<index>193</index>
+		<size>4</size>
+		<target>org.hannes.event.NullEvent</target>
+		<attributes />
+	</decoder>
+	<decoder>
+		<index>137</index>
+		<size>1</size>
+		<target>org.hannes.event.NullEvent</target>
+		<attributes />
+	</decoder>
+	<decoder>
+		<index>149</index>
+		<size>1</size>
+		<target>org.hannes.event.NullEvent</target>
+		<attributes />
+	</decoder>
+	<decoder>
+		<index>130</index>
+		<size>-1</size>
+		<target>org.hannes.event.NullEvent</target>
+		<attributes />
+	</decoder>
+	<decoder>
+		<index>34</index>
+		<size>-1</size>
+		<target>org.hannes.event.CommandEvent</target>
+		<attributes>
+			<attribute type="string">commandText</attribute>
+		</attributes>
+	</decoder>
+	<decoder>
+		<index>234</index>
+		<size>-1</size>
+		<target>org.hannes.event.WalkEvent</target>
+		<attributes>
+			<attribute type="boolean">running</attribute>
+			<attribute type="short">initialX</attribute>
+			<attribute type="short">initialY</attribute>
+			<attribute type="array" offset="5">data</attribute>
+		</attributes>
+	</decoder>
+	<decoder>
+		<index>67</index>
+		<size>-1</size>
+		<target>org.hannes.event.WalkEvent</target>
+		<attributes>
+			<attribute type="boolean">running</attribute>
+			<attribute type="short">initialX</attribute>
+			<attribute type="short">initialY</attribute>
+			<attribute type="array" offset="5">data</attribute>
+		</attributes>
+	</decoder>
+	<decoder>
+		<index>236</index>
+		<size>-1</size>
+		<target>org.hannes.event.WalkEvent</target>
+		<attributes>
+			<attribute type="boolean">running</attribute>
+			<attribute type="short">initialX</attribute>
+			<attribute type="short">initialY</attribute>
+			<attribute type="array" offset="19">data</attribute>
+		</attributes>
+	</decoder>
+	<decoder>
+		<index>177</index>
+		<size>6</size>
+		<target>org.hannes.event.EquipEvent</target>
+		<attributes>
+			<attribute type="short">id</attribute>
+			<attribute type="short">slot</attribute>
+			<attribute type="short">interfaceId</attribute>
+		</attributes>
+	</decoder>
+	<decoder>
+		<index>86</index>
+		<size>2</size>
+		<target>org.hannes.event.ButtonEvent</target>
+		<attributes>
+			<attribute type="short">index</attribute>
+		</attributes>
+	</decoder>
+	<decoder>
+		<index>161</index>
+		<size>3</size>
+		<target>org.hannes.event.StatusUpdateEvent</target>
+		<attributes>
+			<attribute type="byte">publicChat</attribute>
+			<attribute type="byte">privateChat</attribute>
+			<attribute type="byte">trade</attribute>
+		</attributes>
+	</decoder>
+	<decoder>
+		<index>44</index>
+		<size>6</size>
+		<target>org.hannes.event.InterfaceItemEvent</target>
+		<attributes>
+			<attribute type="constant" value="1" >index</attribute>
+			<attribute type="short">itemId</attribute>
+			<attribute type="short">slot</attribute>
+			<attribute type="short">interfaceId</attribute>
+		</attributes>
+	</decoder>
+	<decoder>
+		<index>111</index>
+		<size>6</size>
+		<target>org.hannes.event.InterfaceItemEvent</target>
+		<attributes>
+			<attribute type="constant" value="2" >index</attribute>
+			<attribute type="short">itemId</attribute>
+			<attribute type="short">slot</attribute>
+			<attribute type="short">interfaceId</attribute>
+		</attributes>
+	</decoder>
+	<decoder>
+		<index>124</index>
+		<size>6</size>
+		<target>org.hannes.event.InterfaceItemEvent</target>
+		<attributes>
+			<attribute type="constant" value="3" >index</attribute>
+			<attribute type="short">itemId</attribute>
+			<attribute type="short">slot</attribute>
+			<attribute type="short">interfaceId</attribute>
+		</attributes>
+	</decoder>
+	<decoder>
+		<index>248</index>
+		<size>6</size>
+		<target>org.hannes.event.InterfaceItemEvent</target>
+		<attributes>
+			<attribute type="constant" value="4" >index</attribute>
+			<attribute type="short">itemId</attribute>
+			<attribute type="short">slot</attribute>
+			<attribute type="short">interfaceId</attribute>
+		</attributes>
+	</decoder>
+	<decoder>
+		<index>227</index>
+		<size>6</size>
+		<target>org.hannes.event.InterfaceItemEvent</target>
+		<attributes>
+			<attribute type="constant" value="5" >index</attribute>
+			<attribute type="short">itemId</attribute>
+			<attribute type="short">slot</attribute>
+			<attribute type="short">interfaceId</attribute>
+		</attributes>
+	</decoder>
+	<decoder>
+		<index>145</index>
+		<size>0</size>
+		<target>org.hannes.event.IdleEvent</target>
+		<attributes />
+	</decoder>
+	<decoder>
+		<index>253</index>
+		<size>6</size>
+		<target>org.hannes.event.MoveItemEvent</target>
+		<attributes>
+			<attribute type="short">interfaceId</attribute>
+			<attribute type="short">source</attribute>
+			<attribute type="short">destination</attribute>
+		</attributes>
+	</decoder>
+	<decoder>
+		<index>10</index>
+		<size>6</size>
+		<target>org.hannes.event.ObjectInteractionEvent</target>
+		<attributes>
+			<attribute type="short">x</attribute>
+			<attribute type="short">y</attribute>
+			<attribute type="short">id</attribute>
+			<attribute type="constant" value="1" >action</attribute>
+		</attributes>
+	</decoder>
+</decoders>

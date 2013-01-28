@@ -1,0 +1,23 @@
+<event-handlers>
+	<!-- Button handlers -->
+	<handler class="org.hannes.event.ButtonEvent">org.hannes.rs2.content.misc.CommonButtonEventHandler</handler>
+	<handler class="org.hannes.event.ButtonEvent">org.hannes.rs2.content.misc.SettingsEventHandler</handler>
+
+	<!-- Miscelaneous handlers -->
+	<handler class="org.hannes.event.IdleEvent">org.hannes.rs2.content.misc.IdleEventHandler</handler>
+	<handler class="org.hannes.event.CommandEvent">org.hannes.rs2.content.misc.CommandEventHandler</handler>
+	<handler class="org.hannes.event.WalkEvent">org.hannes.rs2.content.WalkEventHandler</handler>
+	<handler class="org.hannes.event.InitializeEvent">org.hannes.rs2.content.InitializeEventHandler</handler>
+	<handler class="org.hannes.event.LoginEvent">org.hannes.rs2.content.misc.PlayerLoginEventHandler</handler>
+	<handler class="org.hannes.event.StatusUpdateEvent">org.hannes.rs2.content.misc.StatusUpdateEventHandler</handler>
+	<handler class="org.hannes.event.ObjectInteractionEvent">org.hannes.rs2.content.misc.CommonObjectEventHandler</handler>
+	
+	<!-- Banking and Equipment -->
+	<handler class="org.hannes.event.InterfaceItemEvent">org.hannes.rs2.content.misc.DepositInterfaceEventHandler</handler>
+	<handler class="org.hannes.event.InterfaceItemEvent">org.hannes.rs2.content.misc.WithdrawInterfaceEventHandler</handler>
+	<handler class="org.hannes.event.EquipEvent">org.hannes.rs2.content.misc.WieldEventHandler</handler>
+	<handler class="org.hannes.event.MoveItemEvent">org.hannes.rs2.content.misc.MoveItemEventHandler</handler>
+	
+	<!-- Combat -->
+	<handler class="org.hannes.event.ButtonEvent">org.hannes.rs2.content.misc.AttackButtonEventHandler</handler>
+</event-handlers>
